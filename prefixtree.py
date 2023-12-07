@@ -61,7 +61,6 @@ class PrefixTree:
     if not node.is_terminal():
       node.terminal = True
       self.size += 1
-    print("inserted", string)
 
   def _find_node(self, string):
     """Return a pair containing the deepest node in this prefix tree that
@@ -78,7 +77,6 @@ class PrefixTree:
     for letter in string:
       if node.has_child(letter):
         node = node.get_child(letter)
-        print("find_char:", node.character)
         depth += 1
       else:
         raise ValueError(f'String {string!r} is not in the prefix tree')
@@ -100,10 +98,8 @@ class PrefixTree:
     # Find the deepest node that matches the longest prefix of the given string
     node, depth = self._find_node(prefix)
 
-    print("complete", prefix, node.character)
     # TODO: Use depth-first traversal to find all completions
     self._traverse(node, prefix, completions.append)
-    print("list:", completions)
     return completions
 
   def strings(self):
@@ -122,8 +118,6 @@ class PrefixTree:
     #if the node is terminal
     #call visit
     if node.is_terminal():
-      print(prefix)
-      print("node: ", node.character, node.is_terminal())
       visit(prefix)
 
     #if the node has children (can be terminal AND have childen) we need to
