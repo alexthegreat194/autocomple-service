@@ -1,8 +1,10 @@
 import os
 import re
 import json
+from tqdm import tqdm
 
 dir = "/usr/share/dict/words"
+
 
 def get_words():
     with open(dir, 'r') as f:
@@ -17,8 +19,12 @@ def read_words():
         print("\"words.json\" does not exist. Reading words off of OS...")
         get_words()  
 
-    with open('words.json', 'r') as f:
-        words = json.load(f)
+    file_size = os.path.getsize('words.json')
+    with tqdm(total=file_size, unit='B', unit_scale=True, desc='Reading JSON') as pbar:
+        pbar.update(0)
+        with open('words.json', 'r') as f:
+            words = json.load(f)
+        pbar.update(file_size) 
     return words
 
 def main():
